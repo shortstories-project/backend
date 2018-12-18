@@ -1,0 +1,134 @@
+scalar Upload
+scalar Date
+
+type Me {
+  id: ID!
+  username: String!
+  photo: String
+  email: String!
+  isVerified: Boolean!
+}
+
+type User {
+  id: ID!
+  username: String!
+  photo: String
+}
+
+type SuccessMessage {
+  message: String
+}
+
+type RequestReset {
+  email: String!
+}
+
+type Stats {
+  likes: Int
+  dislikes: Int
+  comments: Int
+}
+
+type Story {
+  id: ID!
+  title: String!
+  body: String!
+  user: User!
+  stats: Stats!
+  createdAt: Date!
+}
+
+type Reaction {
+  id: ID!
+  state: String!
+  userId: ID!
+  storyId: ID!
+}
+
+type View {
+  id: ID!
+  userId: ID!
+  storyId: ID!
+}
+
+type StoryConnection {
+  edges: [Story!]!
+  pageInfo: PageInfo!
+}
+
+type Comment {
+  id: ID!
+  body: String!
+  user: User!
+  createdAt: Date!
+}
+
+type CommentConnection {
+  edges: [Comment!]!
+  pageInfo: PageInfo!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  endCursor: String!
+}
+
+type Query {
+  # Users
+  me: Me
+  user(id: ID!): User
+
+  # Stories
+  stories(
+    cursor: String,
+    limit: Int = 20,
+    userId: ID,
+    isLiked: Boolean = false
+  ): StoryConnection!
+  story(id: ID!): Story!
+  reactions(storyId: ID!): [Reaction!]!
+
+  # Comments
+  comments(
+    cursor: String,
+    limit: Int = 10,
+    storyId: ID!
+  ): CommentConnection!
+  comment(id: ID!): Comment!
+}
+
+type Mutation {
+  # User
+  signUp(username: String!, email: String!, password: String!): Me!
+  signIn(login: String!, password: String!): Me!
+  signOut: SuccessMessage
+  verifyUser(token: String!): Me!
+  checkUserExist(login: String!): Boolean!
+  requestReset(login: String!): RequestReset
+  resetPassword(
+    token: String!
+    password: String!
+    passwordConfirmation: String!
+  ): Me!
+  updateUser(username: String, photo: String): Me!
+  postPhoto(
+    file: Upload!
+    width: Float!
+    height: Float!
+    x: Float!
+    y: Float!
+  ): Me!
+
+  # Story
+  createStory(title: String!, body: String!): Story!
+  updateStory(id: ID!, title: String, body: String): Story!
+  likeStory(id: ID!): Reaction!
+  dislikeStory(id: ID!): Reaction!
+  viewStory(id: ID!): View!
+  deleteStory(id: ID!): Story!
+
+  # Comment
+  createComment(id: ID!, body: String!): Comment!
+  updateComment(id: ID!, body: String!): Comment!
+  deleteComment(id: ID!): Comment!
+}
