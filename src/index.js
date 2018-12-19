@@ -34,19 +34,23 @@ server.express.use(
 
 const isTest = !!process.env.TEST_DATABASE
 
+const options = {
+  cors: {
+    credentials: true,
+    origin: process.env.FRONTEND_URL,
+  },
+  endpoint: '/graphql',
+  playground: process.env.NODE_ENV === 'development' ? '/playground' : false,
+  port: process.env.PORT || 4444,
+}
+
 sequelize.sync({ force: isTest }).then(async () => {
-  server.start(
-    {
-      cors: {
-        credentials: true,
-        origin: process.env.FRONTEND_URL,
-      },
-    },
+  server.start(options,
     ({ port }) => {
       // eslint-disable-next-line
       console.log(
         `\n🔥 Server is now running on ${chalk.yellowBright(
-          `http://localhost:${port}`
+          `http://localhost:${port}/graphql`
         )} 🔥`
       )
     }
