@@ -30,7 +30,7 @@ export default {
         maxAge: 100 * 60 * 60 * 24 * 365, // 1 year cookie
       })
       await transport.sendMail({
-        from: `Shortstories <${process.env.SMTP_USER}>`,
+        from: 'Shortstories',
         to: user.email,
         subject: 'Verify your account',
         html: makeANiceEmail(`Welcome to Shortstories! Verify we have the right email address by clicking on the link below:
@@ -98,7 +98,7 @@ export default {
         resetTokenExpiry,
       })
       await transport.sendMail({
-        from: `Shortstories <${process.env.SMTP_USER}>`,
+        from: 'Shortstories',
         to: user.email,
         subject: 'Reset Password',
         html: makeANiceEmail(`Your Password Reset Token is here!
