@@ -14,6 +14,7 @@
   "license": "MIT",
   "scripts": {
     "start:dev": "nodemon -e js,graphql -x babel-node src/index.js",
+    "start:prod": "pm2 start src/index.js --interpreter ./node_modules/.bin/babel-node",
     "test-server": "TEST_DATABASE_URL=postgres://shashkov@127.0.0.1:5432/shortstories_test yarn start",
     "test": "mocha --timeout 10000 --require @babel/register 'src/**/*.spec.js'",
     "lint:js": "eslint src/ --fix"
@@ -37,6 +38,7 @@
     "nanoid": "^2.0.0",
     "nodemailer": "^4.7.0",
     "pg": "^7.7.1",
+    "pm2": "^3.2.4",
     "ramda": "^0.26.1",
     "sequelize": "^5.0.0-beta.15"
   },
