@@ -1,14 +1,12 @@
 import nodemailer from 'nodemailer'
 
 export const transport = nodemailer.createTransport({
-  service: 'gmail',
+  host: process.env.MAIL_HOST,
+  port: process.env.MAIL_PORT,
   auth: {
-    type: 'OAuth2',
-    user: process.env.SMTP_USER,
-    clientId: process.env.GOOGLE_AUTH_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_AUTH_SECRET,
-    refreshToken: process.env.GOOGLE_AUTH_REFRESH_TOKEN,
-  },
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS,
+  }
 })
 
 export const makeANiceEmail = text => `
