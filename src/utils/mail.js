@@ -1,6 +1,6 @@
-import postmark from 'postmark'
+import { ServerClient } from 'postmark'
 
-export const transport = new postmark.ServerClient("b0c4737e-0164-4122-8e32-c904a97f9931");
+export const transport = new ServerClient("b0c4737e-0164-4122-8e32-c904a97f9931");
 
 // client.sendEmail({
 //   "From": "team@shortstories.io",
