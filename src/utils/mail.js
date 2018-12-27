@@ -1,13 +1,12 @@
-import { ServerClient } from 'postmark'
+import nodemailer from 'nodemailer'
 
-export const transport = new ServerClient("b0c4737e-0164-4122-8e32-c904a97f9931");
-
-// client.sendEmail({
-//   "From": "team@shortstories.io",
-//   "To": "team@shortstories.io",
-//   "Subject": "Test",
-//   "TextBody": "Hello from Postmark!"
-// })
+export const transport = nodemailer.createTransport({
+  service: 'Yandex',
+  auth: {
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS,
+  },
+})
 
 export const makeANiceEmail = text => `
   <div className="email" style="

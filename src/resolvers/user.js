@@ -29,11 +29,11 @@ export default {
         httpOnly: true,
         maxAge: 100 * 60 * 60 * 24 * 365, // 1 year cookie
       })
-      await transport.sendEmail({
-        From: 'team@shortstories.io',
-        To: user.email,
-        Subject: 'Verify your account',
-        HtmlBody: makeANiceEmail(`Welcome to Shortstories! Verify we have the right email address by clicking on the link below:
+      await transport.sendMail({
+        from: `Shortstories <${process.env.MAIL_USER}>`,
+        to: user.email,
+        subject: 'Verify your account',
+        html: makeANiceEmail(`Welcome to Shortstories! Verify we have the right email address by clicking on the link below:
         \n\n
         <a href="${
           process.env.FRONTEND_URL
@@ -98,10 +98,10 @@ export default {
         resetTokenExpiry,
       })
       await transport.sendMail({
-        From: 'team@shortstories.io',
-        To: user.email,
-        Subject: 'Reset Password',
-        HtmlBody: makeANiceEmail(`Your Password Reset Token is here!
+        from: `Shortstories <${process.env.MAIL_USER}>`,
+        to: user.email,
+        subject: 'Reset Password',
+        html: makeANiceEmail(`Your Password Reset Token is here!
         \n\n
         <a href="${
           process.env.FRONTEND_URL
