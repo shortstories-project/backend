@@ -12,7 +12,7 @@ const story = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: true,
-        len: [4000, 40000],
+        len: [1800, 40000],
       },
     },
   })
