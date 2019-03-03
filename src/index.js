@@ -39,9 +39,6 @@ const options = {
     credentials: true,
     origin: process.env.FRONTEND_URL,
   },
-  endpoint: '/graphql',
-  playground: process.env.NODE_ENV === 'development' ? '/playground' : false,
-  port: process.env.PORT || 4444,
 }
 
 sequelize.sync({ force: isTest }).then(async () => {
