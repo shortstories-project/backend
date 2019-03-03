@@ -38,6 +38,7 @@ const options = {
   cors: {
     credentials: true,
     origin: process.env.FRONTEND_URL,
+    endpoint: '/graphql',
   },
 }
 
