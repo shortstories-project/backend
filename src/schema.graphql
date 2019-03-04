@@ -35,6 +35,7 @@ type Story {
   body: String!
   user: User!
   stats: Stats!
+  genre: Genre
   createdAt: Date!
 }
 
@@ -43,6 +44,11 @@ type Reaction {
   state: String!
   userId: ID!
   storyId: ID!
+}
+
+type Genre {
+  id: ID!
+  name: String!
 }
 
 type View {
@@ -87,6 +93,7 @@ type Query {
   ): StoryConnection!
   story(id: ID!): Story!
   reactions(storyId: ID!): [Reaction!]!
+  genres: [Genre]
 
   # Comments
   comments(
@@ -121,7 +128,7 @@ type Mutation {
 
   # Story
   createStory(title: String!, body: String!): Story!
-  updateStory(id: ID!, title: String, body: String): Story!
+  updateStory(id: ID!, title: String!, body: String!, genreId: ID!): Story!
   likeStory(id: ID!): Reaction!
   dislikeStory(id: ID!): Reaction!
   viewStory(id: ID!): View!

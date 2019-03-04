@@ -84,6 +84,8 @@ export default {
 
     story: async (parent, { id }, { models }) =>
       await models.Story.findByPk(id),
+
+    genres: async (parent, args, { models }) => await models.Genre.findAll(),
   },
 
   Mutation: {
@@ -99,9 +101,9 @@ export default {
     updateStory: combineResolvers(
       isAuthenticated,
       isStoryOwner,
-      async (parent, { id, title, body }, ctx) => {
+      async (parent, { id, title, body, genreId }, ctx) => {
         const story = await ctx.models.Story.findByPk(id)
-        return await story.update({ title, body })
+        return await story.update({ title, body, genreId })
       }
     ),
 
@@ -197,6 +199,11 @@ export default {
       return user
     },
 
+    genre: async (story, args, { models }) => {
+      const genre = await models.Genre.findByPk(story.genreId)
+      return genre
+    },
+
     stats: async (story, args, { models }) => {
       const options = {
         where: { storyId: story.id },
@@ -205,7 +212,9 @@ export default {
       const comments = await models.Comment.findAll(options)
       return {
         likes: length(filter(reaction => reaction.state === LIKE, reactions)),
-        dislikes: length(filter(reaction => reaction.state === DISLIKE, reactions)),
+        dislikes: length(
+          filter(reaction => reaction.state === DISLIKE, reactions)
+        ),
         comments: length(comments),
       }
     },

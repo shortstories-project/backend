@@ -19,6 +19,7 @@ const story = (sequelize, DataTypes) => {
 
   Story.associate = models => {
     Story.belongsTo(models.User)
+    Story.belongsTo(models.Genre)
     Story.hasMany(models.Comment, { onDelete: 'cascade', hooks: true })
     Story.hasMany(models.Reaction, { onDelete: 'cascade', hooks: true })
     Story.hasMany(models.View, { onDelete: 'cascade', hooks: true })
