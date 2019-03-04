@@ -127,7 +127,7 @@ type Mutation {
   ): Me!
 
   # Story
-  createStory(title: String!, body: String!): Story!
+  createStory(title: String!, body: String!, genreId: ID!): Story!
   updateStory(id: ID!, title: String!, body: String!, genreId: ID!): Story!
   likeStory(id: ID!): Reaction!
   dislikeStory(id: ID!): Reaction!
