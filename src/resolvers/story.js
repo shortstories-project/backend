@@ -170,13 +170,13 @@ export default {
       }
     ),
 
-    viewStory: combineResolvers(isAuthenticated, async (parent, args, ctx) => {
+    viewStory: async (parent, args, ctx) => {
       const view = await ctx.models.View.create({
         userId: ctx.request.userId,
         storyId: args.id,
       })
       return view
-    }),
+    },
 
     deleteStory: combineResolvers(
       isAuthenticated,
@@ -210,12 +210,14 @@ export default {
       }
       const reactions = await models.Reaction.findAll(options)
       const comments = await models.Comment.findAll(options)
+      const views = await models.View.findAll(options)
       return {
         likes: length(filter(reaction => reaction.state === LIKE, reactions)),
         dislikes: length(
           filter(reaction => reaction.state === DISLIKE, reactions)
         ),
         comments: length(comments),
+        views: views.length,
       }
     },
   },

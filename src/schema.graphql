@@ -27,6 +27,7 @@ type Stats {
   likes: Int
   dislikes: Int
   comments: Int
+  views: Int
 }
 
 type Story {
